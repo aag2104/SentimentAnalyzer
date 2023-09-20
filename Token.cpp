@@ -1,0 +1,1 @@
+//holds info on good and bad
