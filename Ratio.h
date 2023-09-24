@@ -8,14 +8,18 @@ class Ratio
     private:
         int num;
         int denom;
+        double calculation;
     public:
         Ratio();
-        Ratio(int, int);
-        double calculateRatio();
+        Ratio(int, int, double);
+        double calculate();
         int getNum();
         int getDenom();
+        double getCalc();
+        void setCalc(double);
         void setNum(int);
         void setDenom(int);
+        
 
         
 };

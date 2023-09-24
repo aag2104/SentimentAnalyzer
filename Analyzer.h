@@ -7,7 +7,7 @@
 class Analyzer
 {
     private:
-    std::map<std::string, DSString> Tweets;
+    std::map<std::string, Tweet> Tweets;
     public:
     int train();
     int open_and_parse();

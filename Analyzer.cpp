@@ -14,6 +14,19 @@ int Analyzer::clean(char* tweet){
         if(tweet[index] < 0 || tweet[index] > 128){
             tweet[index] = ' '; //keep this in mind when you are tokenizing
         }
+
+        if((tweet[index] >= 34 && tweet[index] <= 38) || (tweet[index] >= 40 && tweet[index] <= 47)){
+            tweet[index] = ' ';
+        }
+
+        if((tweet[index] >= 58 && tweet[index] <= 62) || tweet[index] == 64){
+            tweet[index] = ' ';
+        }
+
+        if((tweet[index] >= 91 && tweet[index] <= 96) || (tweet[index] >= 123 && tweet[index] <= 126)){
+            tweet[index] = ' ';
+        }
+
         index++;
     }while (currChar != '\0');
     return 0;
@@ -22,16 +35,18 @@ int Analyzer::clean(char* tweet){
 int Analyzer::convert_and_store(int sentiment, std::string id, char* tweet){
     DSString message = tweet;
     message = message.toLower();
-    
-    Tweets.insert({id, message});
-    
-    std::map<std::string,DSString>::iterator it = Tweets.begin();
 
-    /*prints current map 
+    Tweet txt(message, sentiment);
+    
+    Tweets.insert({id, txt});
+    
+    std::map<std::string,Tweet>::iterator it = Tweets.begin();
+
+
     for (it=Tweets.begin(); it!=Tweets.end(); ++it){
         std::cout << it->first << " => " << it->second << '\n';
     }
-    */
+    
 
     return 0;
 }
@@ -65,7 +80,7 @@ int Analyzer::open_and_parse(){
         int line_index = 0;
         int tweet_index = 0;
 
-        while (line_index < sizeof(line)){
+        while (line_index < (int)sizeof(line)){ 
             if(commaCounter == 5){
                 do {
                     tweet[tweet_index] = line[line_index];
@@ -95,6 +110,6 @@ int Analyzer::open_and_parse(){
 int Analyzer::train()
 {
     open_and_parse();
-    //call tweet class method to begin other operations
+    //interate through map and call tokenize for each tweet
     return 0;
 }

@@ -3,38 +3,37 @@
 
 Tweet::Tweet()
 {
-    sentiment = ' ';
-    id = "0";
+    sentiment = 0;
     message = "empty message";
 }
 
-Tweet::Tweet(char sent, char* num, DSString tweetTxt)
+Tweet::Tweet(DSString tweetTxt, int sent)
 {
     sentiment = sent;
-    id = num;
     message = tweetTxt;
 }
 
-int Tweet::tokenizer(std::map<std::string, DSString>)
+int Tweet::tokenize()
 {
-    
+    //called on a tweet obj -> turns into words and stores in Tokens map
 
     return 0;
 }
-
-
 
 char Tweet::getSentiment()
 {
     return sentiment;
 }
 
-char *Tweet::getId()
-{
-    return id;
-}
-
 DSString Tweet::getMessage()
 {
     return message;
+}
+
+std::ostream &operator<<(std::ostream &output, const Tweet &txt)
+{
+    
+    output << txt.message;
+    return output;
+
 }

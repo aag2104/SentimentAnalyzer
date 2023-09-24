@@ -9,20 +9,17 @@
 class Tweet
 {
     private:
-    char sentiment;
-    char* id;
-    DSString message; 
-    std::map<std::string, Ratio> Tokens;
-    public:
-
-    Tweet();
-    Tweet(char, char*, DSString);
-    int tokenizer(std::map<std::string, DSString> mp);
+        char sentiment;
+        DSString message; 
+        std::map<std::string, Ratio> Tokens;
     
-    char getSentiment();
-    char* getId();
-    DSString getMessage();
-
+    public:
+        Tweet();
+        Tweet(DSString, int);
+        int tokenize();
+        char getSentiment();
+        DSString getMessage();
+        friend std::ostream &operator<<(std::ostream &, const Tweet &);
 };
 
 #endif
