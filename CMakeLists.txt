@@ -35,7 +35,7 @@ add_compile_options(-Wall -Wextra -pedantic)
 
 #add_executable(test_DSString test_DSString.cpp DSString.cpp)
 
-add_executable(Analyzer mainTest.cpp Analyzer.cpp Tweet.cpp DSString.cpp)
+add_executable(Analyzer mainTest.cpp Analyzer.cpp Tweet.cpp DSString.cpp Ratio.cpp)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 

@@ -15,7 +15,7 @@ class Tweet
     
     public:
         Tweet();
-        Tweet(DSString, int);
+        Tweet(DSString, char);
         int tokenize();
         char getSentiment();
         DSString getMessage();

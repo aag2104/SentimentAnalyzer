@@ -11,9 +11,10 @@ class Analyzer
     public:
     int train();
     int open_and_parse();
-    int convert_and_store(int, std::string, char*);
+    int convert_and_store(char, std::string, char*);
     int clean(char*);
-    // test
+    //predict
+    //evaluate predictions
 };
 
 #endif

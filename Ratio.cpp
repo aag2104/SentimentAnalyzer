@@ -49,3 +49,10 @@ void Ratio::setCalc(double newCalc)
 {
     calculation = newCalc;
 }
+
+std::ostream &operator<<(std::ostream &output, const Ratio &rat)
+{
+    output << rat.num << "/" << rat.denom;
+    return output;
+
+}
