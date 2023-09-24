@@ -19,9 +19,9 @@ DSString::DSString(){ //default constructor - called when DSString object is mad
     len = 0;
 }
 DSString::DSString(const char* txt){ //paramaterized constructor - called when DSString object is made WITH args
-    data = new char[strlen(txt)];
+    data = new char[strlen(txt) + 1];
     strcpy(data, txt);
-    len = strlen(data);
+    len = strlen(data) + 1;
 }
 
 DSString::DSString(const DSString &copy_char){ //copy constructor
@@ -39,10 +39,11 @@ DSString::~DSString(){ //destructor
 }
 
 DSString &DSString::operator=(const DSString &copy){ //copy assignment 
-if (*data != *(copy.data))
+if (strcmp(data, copy.data) != 0)
         {
         data = new char[copy.length()];
        	strcpy(data, (copy.data));
+        len = copy.length();
         }
     return *this;
     
@@ -153,6 +154,11 @@ char *DSString::c_str() const
      * contents of this object. Since data already has a `\0`
      * at the end of the string in DSString so you can just return a pointer to data.
      **/
+    return data;
+}
+
+char *DSString::getData() const
+{
     return data;
 }
 
