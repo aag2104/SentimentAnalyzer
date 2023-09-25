@@ -32,21 +32,30 @@ int Analyzer::clean(char* tweet){
     return 0;
 }
 
-int Analyzer::convert_and_store(char sentiment, std::string id, char* tweet){
+int Analyzer::tokenize_map(std::map<std::string, Tweet> messages)
+{
+    std::map<std::string,Tweet>::iterator it = messages.begin();
+
+
+    for (it=messages.begin(); it!=messages.end(); ++it){
+        it->second.tokenize();
+    }
+    
+    
+    /* iterate till end of map 
+        call tweet.tokenize() - returns vector of words w/ tweet sentiment in index[0]
+        store_words() -> iterates through vector and stores words with ratio values/edits current ratio values
+    */
+    return 0;
+}
+
+int Analyzer::convert_and_store(std::string sentiment, std::string id, char* tweet){
     DSString message = tweet;
     message = message.toLower();
 
     Tweet txt(message, sentiment);
     
     Tweets.insert({id, txt});
-    
-    //std::map<std::string,Tweet>::iterator it = Tweets.begin();
-
-
-    //for (it=Tweets.begin(); it!=Tweets.end(); ++it){
-        //std::cout << it->first << " => " << it->second << '\n';
-    //}
-    
 
     return 0;
 }
@@ -66,7 +75,7 @@ int Analyzer::open_and_parse(){
 
         
     while (fgets(line, sizeof(line), stream) != NULL){
-        char sentiment;
+        std::string sentiment;
         char id[20] = {0};
         char tweet[1000] = {0};
                
@@ -110,9 +119,6 @@ int Analyzer::open_and_parse(){
 int Analyzer::train()
 {
     open_and_parse();
-    std::map<std::string,Tweet>::iterator it = Tweets.begin();
-    for (it=Tweets.begin(); it!=Tweets.end(); ++it){
-        it->second.tokenize(); //interate through map and call tokenize for each tweet
-    }
+    tokenize_map(Tweets);
     return 0;
 }

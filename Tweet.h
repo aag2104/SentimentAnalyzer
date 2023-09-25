@@ -3,21 +3,22 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 #include "DSString.h"
 #include "Ratio.h"
 
 class Tweet
 {
     private:
-        char sentiment;
+        std::string sentiment;
         DSString message; 
         std::map<std::string, Ratio> Tokens;
     
     public:
         Tweet();
-        Tweet(DSString, char);
-        int tokenize();
-        char getSentiment();
+        Tweet(DSString, std::string);
+        std::vector<std::string> tokenize();
+        std::string getSentiment();
         DSString getMessage();
         friend std::ostream &operator<<(std::ostream &, const Tweet &);
 };

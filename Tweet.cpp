@@ -3,58 +3,57 @@
 
 Tweet::Tweet()
 {
-    sentiment = ' ';
+    sentiment = "";
     message = "empty message";
 }
 
-Tweet::Tweet(DSString tweetTxt, char sent)
+Tweet::Tweet(DSString tweetTxt, std::string sent)
 {
     sentiment = sent;
     message = tweetTxt;
 }
 
-int Tweet::tokenize()
+std::vector<std::string> Tweet::tokenize()
 { 
-    int index = 0;
-    char currChar;
-    std::string word = ""; 
-    do{
-        currChar = message[index];
-        if(message[index+1] == ' '){ //if there is going to be a space?
-            //if it does exist-> 
-            
-
-
-            //if it doesnt exist already->
-            if(sentiment == '4'){
-                Ratio wordRatio = {1,0,0}; 
-                Tokens.insert({word, wordRatio});
-            } else {
-                Ratio wordRatio = {0,0,0};
-                Tokens.insert({word, wordRatio});
-            }
-            word = ""; //reset word
-        } else {
-            word += currChar;
-        }
-        //also check for special characters
-
-        index++;
-    } while (message[index] != '\0');
-    //remember to operate on Tweet.message!
-    //called on a tweet obj -> turns into words and stores in Tokens map
+    std::vector<std::string> words; 
     
-    std::map<std::string,Ratio>::iterator it = Tokens.begin();
+    words.push_back(sentiment);
 
-
-    for (it=Tokens.begin(); it!=Tokens.end(); ++it){
-        std::cout << it->first << " => " << it->second << '\n';
+    int index = 0; 
+    char currChar;
+    std::string currWord = "";
+    do{
+       currChar = message[index];
+       if(currChar == 33 || currChar == 63){ //store ! or ? as their own token
+            currWord = currChar; //converts currChar to string
+            words.push_back(currWord); //stores new string in vector
+            currWord = ""; //stored, therefore, reset
+            index++;
+       } //else if(currChar != ' '){
+            //DSString DSWord = message.substring(currChar, message.findNextSpace(currChar));
+            //char DSChar = *(DSWord.getData());
+            //currWord = DSChar;
+            //index = index + DSWord.length();
+            //currWord = ""; //reset word
+            
+            //store substring till next space
+            //message.find() returns index of next space 
+            //currWord = message.substring(-, message.find())
+       //} 
+        index++;
+    }while (currChar != '\0');
+    
+    
+    //print current vector -for testing purposes
+    for(int i = 0; i < words.size(); i++){
+        std::cout << words[i] << " ";
     }
+    std::cout << std::endl;
 
-    return 0;
+    return words;
 }
 
-char Tweet::getSentiment()
+std::string Tweet::getSentiment()
 {
     return sentiment;
 }
@@ -70,4 +69,4 @@ std::ostream &operator<<(std::ostream &output, const Tweet &txt)
     output << txt.message;
     return output;
 
-}
+} 

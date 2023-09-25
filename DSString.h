@@ -92,6 +92,8 @@ public:
     // You will need a split or tokenize function.
 
     char* getData() const;
+
+    int findNextSpace(int);
 };
 
 #endif
