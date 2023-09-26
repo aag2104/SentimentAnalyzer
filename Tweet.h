@@ -10,14 +10,14 @@
 class Tweet
 {
     private:
-        std::string sentiment;
+        char sentiment;
         DSString message; 
     
     public:
         Tweet();
         Tweet(DSString, char);
-        std::vector<std::string> tokenize();
-        std::string getSentiment();
+        std::vector<DSString> tokenize();
+        char getSentiment();
         DSString getMessage();
         friend std::ostream &operator<<(std::ostream &, const Tweet &);
 };

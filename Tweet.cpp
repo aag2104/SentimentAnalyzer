@@ -3,7 +3,7 @@
 
 Tweet::Tweet()
 {
-    sentiment = "";
+    sentiment = ' ';
     message = "empty message";
 }
 
@@ -13,15 +13,18 @@ Tweet::Tweet(DSString tweetTxt, char sent)
     message = tweetTxt;
 }
 
-std::vector<std::string> Tweet::tokenize()
+
+std::vector<DSString> Tweet::tokenize()
 { 
-    std::vector<std::string> words; 
+    std::vector<DSString> words; 
+
+    DSString sent = &sentiment;
     
-    words.push_back(sentiment);
+    words.push_back(sent);
 
     int index = 0; 
     char currChar;
-    std::string currWord = "";
+    DSString currWord;
     
     do{
        currChar = message[index];
@@ -35,7 +38,11 @@ std::vector<std::string> Tweet::tokenize()
        }
 
        if(currChar != ' '){
-        currWord += currChar;
+        char c[3];
+        c[0] = currChar;
+        DSString currC = c; //good
+
+        //currWord = currWord + currC doesnt work
        }
 
 
@@ -52,7 +59,8 @@ std::vector<std::string> Tweet::tokenize()
     return words;
 }
 
-std::string Tweet::getSentiment()
+
+char Tweet::getSentiment()
 {
     return sentiment;
 }

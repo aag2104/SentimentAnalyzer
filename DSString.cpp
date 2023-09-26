@@ -112,6 +112,26 @@ bool DSString::operator<(const DSString &rhs) const
     return returnVal;
 }
 
+bool DSString::operator!=(const DSString &rhs) const
+{
+
+    if (length() != rhs.length())
+    {
+        return false;
+    }
+
+    for (size_t i = 0; i < length(); ++i)
+    {
+        if (data[i] != rhs.data[i])
+        {
+            return false;
+        }
+
+    }
+    return true;
+
+}
+
 DSString DSString::substring(size_t start, size_t numChars) const
 {
     /*returns a new string object that contains a
