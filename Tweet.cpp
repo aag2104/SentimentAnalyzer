@@ -7,7 +7,7 @@ Tweet::Tweet()
     message = "empty message";
 }
 
-Tweet::Tweet(DSString tweetTxt, std::string sent)
+Tweet::Tweet(DSString tweetTxt, char sent)
 {
     sentiment = sent;
     message = tweetTxt;
@@ -22,31 +22,30 @@ std::vector<std::string> Tweet::tokenize()
     int index = 0; 
     char currChar;
     std::string currWord = "";
+    
     do{
        currChar = message[index];
-       if(currChar == 33 || currChar == 63){ //store ! or ? as their own token
-            currWord = currChar; //converts currChar to string
-            words.push_back(currWord); //stores new string in vector
-            currWord = ""; //stored, therefore, reset
-            index++;
-       } //else if(currChar != ' '){
-            //DSString DSWord = message.substring(currChar, message.findNextSpace(currChar));
-            //char DSChar = *(DSWord.getData());
-            //currWord = DSChar;
-            //index = index + DSWord.length();
-            //currWord = ""; //reset word
-            
-            //store substring till next space
-            //message.find() returns index of next space 
-            //currWord = message.substring(-, message.find())
-       //} 
-        index++;
+       
+       if(currChar == 33 || currChar == 63){
+            words.push_back(currWord);
+            currWord = "";
+       }else if(currChar == ' ' && currWord != ""){ //and current word is not empty
+            words.push_back(currWord);
+            currWord = "";
+       }
+
+       if(currChar != ' '){
+        currWord += currChar;
+       }
+
+
+       index++;
     }while (currChar != '\0');
     
     
     //print current vector -for testing purposes
     for(int i = 0; i < words.size(); i++){
-        std::cout << words[i] << " ";
+        std::cout << words[i] << ",";
     }
     std::cout << std::endl;
 

@@ -19,6 +19,7 @@ class Ratio
         void setCalc(double);
         void setNum(int);
         void setDenom(int);
+        int numOccur();
         friend std::ostream &operator<<(std::ostream &, const Ratio &);
         
 

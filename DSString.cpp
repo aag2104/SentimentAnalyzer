@@ -162,18 +162,6 @@ char *DSString::getData() const
     return data;
 }
 
-int DSString::findNextSpace(int currIndex) //returns index of next space (closest to currIndex)
-{
-    int spaceIndex;
-    for(int i = data[currIndex]; i < len; i++){
-        if(data[i] == ' '){
-            spaceIndex = i;
-        }
-    }
-    
-    return spaceIndex;
-}
-
 std::ostream &operator<<(std::ostream &output, const DSString &txt)
 {
     /**

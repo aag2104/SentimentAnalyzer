@@ -93,7 +93,6 @@ public:
 
     char* getData() const;
 
-    int findNextSpace(int);
 };
 
 #endif

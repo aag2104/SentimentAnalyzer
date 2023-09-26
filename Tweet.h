@@ -12,11 +12,10 @@ class Tweet
     private:
         std::string sentiment;
         DSString message; 
-        std::map<std::string, Ratio> Tokens;
     
     public:
         Tweet();
-        Tweet(DSString, std::string);
+        Tweet(DSString, char);
         std::vector<std::string> tokenize();
         std::string getSentiment();
         DSString getMessage();

@@ -40,6 +40,11 @@ void Ratio::setDenom(int newDenom)
     denom = newDenom;
 }
 
+int Ratio::numOccur()
+{
+    return num + denom;
+}
+
 double Ratio::getCalc()
 {
     return calculation;
