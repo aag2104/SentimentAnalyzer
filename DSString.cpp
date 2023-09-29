@@ -72,22 +72,20 @@ DSString DSString::operator+(const DSString &appendString) const // Overloaded o
     const int s = (size1 + size2) - 1; // plus 1 to account for null char
     char newString[s];
 
-    for (int i = 0; i < size1; i++)
+    for (int i = 0; i < size1-1; i++)
     {
         newString[i] = data[i];
+        //std::cout << newString[i];
     }
     int j = 0;
-    for (int i = size1; i < s; i++)
+    for (int i = size1-1; i < s; i++)
     {
         newString[i] = appendString.data[j];
+        //std::cout << newString[i];
         j++;
     }
 
     int index = 0;
-    do{
-        std::cout << newString[index];
-        index++;
-    }while(newString[index] != '\0');
 
     DSString newDSString(newString);
 

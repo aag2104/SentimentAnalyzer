@@ -22,7 +22,7 @@ std::vector<DSString> Tweet::tokenize()
 
     int index = 0;
     char currChar;
-    DSString currWord;
+    DSString currWord = "";
 
     do
     {
@@ -33,7 +33,7 @@ std::vector<DSString> Tweet::tokenize()
             words.push_back(currWord);
             currWord = "";
         }
-        else if (currChar == ' ' && currWord != "")
+        else if (currChar == ' ' && currWord[0] != '\0')
         { // and current word is not empty
             words.push_back(currWord);
             currWord = "";
@@ -41,22 +41,22 @@ std::vector<DSString> Tweet::tokenize()
 
         if (currChar != ' ')
         {
-            DSString hello = "hello";
-            DSString yo = "yo";
-            DSString hi = yo + hello;
-            std::cout << hi;
+            char currC[2];
+            currC[0] = currChar;
+            DSString curr = currC;
+            
+            currWord = currWord + curr;
 
-            // currWord = currWord + currC doesnt work
         }
 
         index++;
     } while (currChar != '\0');
 
     // print current vector -for testing purposes
-    //for (int i = 0; i < words.size(); i++)
-    //{
-       // std::cout << words[i] << ",";
-    //}
+    for (int i = 0; i < words.size(); i++)
+    {
+        std::cout << words[i] << ",";
+    }
     std::cout << std::endl;
 
     return words;
