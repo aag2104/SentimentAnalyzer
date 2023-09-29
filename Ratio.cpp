@@ -2,7 +2,7 @@
 
 Ratio::Ratio()
 {
-    num = 0; 
+    num = 0;
     denom = 0;
     calculation = 0;
 }
@@ -16,7 +16,7 @@ Ratio::Ratio(int one, int two, double three)
 
 double Ratio::calculate()
 {
-    calculation = num/denom;
+    calculation = num / denom;
     return calculation;
 }
 
@@ -59,5 +59,4 @@ std::ostream &operator<<(std::ostream &output, const Ratio &rat)
 {
     output << rat.num << "/" << rat.denom;
     return output;
-
 }

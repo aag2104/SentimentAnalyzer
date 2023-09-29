@@ -43,6 +43,7 @@ public:
      * Overloaded operator+ which appends the string in the argument to this string
      */
     DSString operator+(const DSString &) const;
+    DSString operator+=(const char) const;
 
     /**
      * Standard relational operators to compare and order your strings.
@@ -92,8 +93,7 @@ public:
     // substring within a string or a function that breaks a string into words.
     // You will need a split or tokenize function.
 
-    char* getData() const;
-
+    char *getData() const;
 };
 
 #endif
