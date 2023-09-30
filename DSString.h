@@ -43,7 +43,6 @@ public:
      * Overloaded operator+ which appends the string in the argument to this string
      */
     DSString operator+(const DSString &) const;
-    DSString operator+=(const char) const;
 
     /**
      * Standard relational operators to compare and order your strings.

@@ -51,7 +51,7 @@ int Analyzer::tokenize_map(std::map<DSString, Tweet> messages) // returns vector
     std::map<DSString,Ratio>::iterator ij = Tokens.begin();
 
     for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
-        std::cout << ij->first << "->" << ij->second << std::endl;
+        std::cout << ij->first << std::endl;
     }
 
     return 0;
@@ -64,6 +64,10 @@ int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector
 
     for(int i = 1; i < tweet.size(); i++){
 
+            Ratio rat = {1,0,0}; //num = positive
+            Tokens.insert({tweet[i], rat});
+        
+        /*
         if (Tokens.find(tweet[i]) == Tokens.end()) { // not found in Tokens map
             if(sentiment == "4"){ //positive
                 Ratio rat = {1,0,0}; //num = positive
@@ -81,7 +85,7 @@ int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector
                 Tokens[tweet[i]].setDenom(newDenom);
             }
         }
-
+        */
     }
 
     return 0;

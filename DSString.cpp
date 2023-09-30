@@ -92,11 +92,6 @@ DSString DSString::operator+(const DSString &appendString) const // Overloaded o
     return newDSString;
 }
 
-DSString DSString::operator+=(const char) const
-{
-    return DSString();
-}
-
 // Standard relational operators to compare and order your strings.
 // Feel free to add additional.
 bool DSString::operator==(const DSString &rhs) const
@@ -125,7 +120,7 @@ bool DSString::operator<(const DSString &rhs) const
     int i = 0;
     do
     {
-        if (data[i] < rhs.data[i])
+        if (data[i] < rhs.data[i] || len != rhs.length())
         {
             returnVal = true;
             break;
