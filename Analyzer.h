@@ -8,7 +8,7 @@ class Analyzer
 {
 private:
     std::map<DSString, Tweet> Tweets;
-    std::map<std::string, Ratio> Tokens;
+    std::map<DSString, Ratio> Tokens;
 
 public:
     int train();

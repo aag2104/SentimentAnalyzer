@@ -53,9 +53,17 @@ std::vector<DSString> Tweet::tokenize()
     } while (currChar != '\0');
 
     // print current vector -for testing purposes
+    
+    
+    for(int i = 0; i < words.size(); i++){ //having manually fix this error...
+        if(words[i] == "\0"){
+            words.erase(words.begin()+i);
+       }
+   }
+    
     for (int i = 0; i < words.size(); i++)
     {
-        std::cout << words[i] << ",";
+       std::cout << words[i] << "|";
     }
     std::cout << std::endl;
 

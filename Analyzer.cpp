@@ -44,28 +44,28 @@ int Analyzer::tokenize_map(std::map<DSString, Tweet> messages) // returns vector
 
     for (it = messages.begin(); it != messages.end(); ++it)
     {
-        it->second.tokenize();
-        // store_words(it->second.tokenize()); //returns vector of strings with sentiment of tweet in index[0]
+        //it->second.tokenize();
+       store_words(it->second.tokenize()); //returns vector of strings with sentiment of tweet in index[0]
     }
 
-    // std::map<std::string,Ratio>::iterator ij = Tokens.begin();
+    std::map<DSString,Ratio>::iterator ij = Tokens.begin();
 
-    // for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
-    // std::cout << ij->first << "->" << ij->second << std::endl;
-    //}
+    for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
+        std::cout << ij->first << "->" << ij->second << std::endl;
+    }
 
     return 0;
 }
 
-/*
+//tweet is a vector of words (DSString)
 int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector and stores words with ratio values/edits current ratio values
 {
-    char sentiment = tweet[0]; //will be fixed later on
+    DSString sentiment = tweet[0]; //will be fixed later on
 
     for(int i = 1; i < tweet.size(); i++){
 
         if (Tokens.find(tweet[i]) == Tokens.end()) { // not found in Tokens map
-            if(sentiment == '4'){ //positive
+            if(sentiment == "4"){ //positive
                 Ratio rat = {1,0,0}; //num = positive
                 Tokens.insert({tweet[i], rat});
             } else { //negative
@@ -73,7 +73,7 @@ int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector
                 Tokens.insert({tweet[i], rat});
             }
         } else { //in Tokens map already
-            if(sentiment == '4'){ //positive
+            if(sentiment == "4"){ //positive
                 int newNum = Tokens[tweet[i]].getNum() + 1;
                 Tokens[tweet[i]].setNum(newNum);
             } else { //negative
@@ -86,7 +86,7 @@ int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector
 
     return 0;
 }
-*/
+
 /*
 int Analyzer::decide_significance(std::map<std::string, Ratio>)
 {
@@ -120,6 +120,8 @@ int Analyzer::convert_and_store(char sentiment, char *id, char *tweet)
     DSString message = tweet;
     DSString idNum = id;
     message = message.toLower();
+
+    std::cout << message;
 
     Tweet txt(message, sentiment);
 
