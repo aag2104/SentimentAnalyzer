@@ -111,7 +111,7 @@ bool DSString::operator==(const DSString &rhs) const
         }
         else
         {
-            returnVal = false;
+            return false;
         }
         i++;
     } while (data[i] != '\0' && rhs.data[i] != '\0');

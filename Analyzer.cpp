@@ -60,7 +60,7 @@ int Analyzer::tokenize_map(std::map<DSString, Tweet> messages) // returns vector
 //tweet is a vector of words (DSString)
 int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector and stores words with ratio values/edits current ratio values
 {
-    DSString sentiment = tweet[0]; //will be fixed later on
+    DSString sentiment = tweet[0]; 
 
     for(int i = 1; i < tweet.size(); i++){
 

@@ -39,7 +39,7 @@ std::vector<DSString> Tweet::tokenize()
             currWord = "";
         }
 
-        if (currChar != ' ')
+        if (currChar != ' ' && currChar != '\n')
         {
             char currC[2];
             currC[0] = currChar;
@@ -47,6 +47,11 @@ std::vector<DSString> Tweet::tokenize()
             
             currWord = currWord + curr;
 
+        }
+
+        if(message[index+1] == '\0'){
+           words.push_back(currWord);
+           break;
         }
 
         index++;
