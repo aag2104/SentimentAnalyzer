@@ -1,11 +1,11 @@
 #include "Tweet.h"
 
-Tweet::Tweet()
+Tweet::Tweet() //default constructor 
 {
     sentiment = ' ';
     message = "empty";
 }
-Tweet::Tweet(DSString tweetTxt, char sent)
+Tweet::Tweet(DSString tweetTxt, char sent) //parameterized constructor
 {
     sentiment = sent;
     message = tweetTxt;
