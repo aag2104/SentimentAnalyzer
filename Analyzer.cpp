@@ -43,20 +43,20 @@ int Analyzer::clean(char *tweet)
     return 0;
 }
 
-int Analyzer::tokenize_map(std::map<DSString, Tweet> messages) // returns vector of words w/ tweet sentiment in index[0]
+int Analyzer::tokenizeMap(std::map<DSString, Tweet> messages) // returns vector of words w/ tweet sentiment in index[0]
 {
     std::map<DSString, Tweet>::iterator it = messages.begin();
 
     for (it = messages.begin(); it != messages.end(); ++it)
     {
-       store_words(it->second.tokenize()); //returns vector of strings with sentiment of tweet in index[0]
+       storeWords(it->second.tokenize()); //returns vector of strings with sentiment of tweet in index[0]
     }
 
     return 0;
 }
 
 //tweet is a vector of words (DSString)
-int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector and stores words with ratio values/edits current ratio values
+int Analyzer::storeWords(std::vector<DSString> tweet) //iterates through vector and stores words with ratio values/edits current ratio values
 {
     DSString sentiment = tweet[0]; 
 
@@ -85,7 +85,7 @@ int Analyzer::store_words(std::vector<DSString> tweet) //iterates through vector
 }
 
 
-int Analyzer::decide_significance(std::map<DSString, Ratio>)
+int Analyzer::decideSignificance(std::map<DSString, Ratio>)
 {
 
    std::map<DSString,Ratio>::iterator it = Tokens.begin();
@@ -112,7 +112,7 @@ int Analyzer::decide_significance(std::map<DSString, Ratio>)
 }
 
 
-int Analyzer::convert_and_store(char sentiment, char *id, char* tweet)
+int Analyzer::convertToTweets(char sentiment, char* id, char* tweet)
 {
     // int index = 0;
     // do{
@@ -120,27 +120,27 @@ int Analyzer::convert_and_store(char sentiment, char *id, char* tweet)
     //         index++;
     //     }while(tweet[index] != '\0');
     // std::cout << '\n';
-    DSString message(tweet);
-    message[message.length()] = '\0';
+    DSString message = tweet; 
     std::cout << message << '\n';
 
-    DSString idNum(id);
-    idNum[idNum.length()] = '\0';
+    //DSString idNum(id);
+    //idNum[idNum.length()] = '\0';
     
     //message.toLower();
-    std::cout << message << '\n';
+    //std::cout << message << '\n';
+    // char twt[20] = "hello";
+    //DSString str("hello"); 
+    Tweet txt(message, sentiment); //doesnt work
+    std::cout << txt.getMessage() << txt.getSentiment() << '\n';
 
-    Tweet txt(message, sentiment);
-    //std::cout << txt.getMessage() << txt.getSentiment() << '\n';
-
-    Tweets.insert({id, txt});
+    //Tweets.insert({id, txt});
 
     return 0;
 }
 
-int Analyzer::open_and_parse()
+int Analyzer::openTrain()
 {
-    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104/data/SmallDataSet.txt";
+    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104/data/train_dataset_20k.csv";
     FILE *stream;
 
     //set up the buffer
@@ -197,8 +197,72 @@ int Analyzer::open_and_parse()
         //     std::cout << tweet[index];
         //     index++;
         // }while(tweet[index] != '\0');
-        convert_and_store(sentiment, id, tweet);
+        //convertToTweets(sentiment, id, tweet);
         // std::cout << std::endl;
+
+    }
+
+     fclose(stream);
+     return 0;
+}
+
+int Analyzer::openTest(){
+    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104/data/test_dataset_10k.csv";
+    FILE *stream;
+
+    //set up the buffer
+    char line[1000]; // maximum line length
+
+    stream = fopen(filename, "r");
+    if (stream == NULL)
+    {
+        std::cerr << "Opening the file failed!" << std::endl;
+        return (-1);
+    }
+
+    while (fgets(line, sizeof(line), stream) != NULL)
+    {
+        char id[11] = {0};
+        char tweet[200] = {0};
+
+        for (int i = 2; i < 12; i++)
+        {
+            id[i - 2] = line[i];
+        }
+
+        int commaCounter = 0;
+        int line_index = 0;
+        int tweet_index = 0;
+
+        while (line_index < (int)sizeof(line))
+        {
+            if (commaCounter == 4)
+            {
+                do
+                {
+                    tweet[tweet_index] = line[line_index];
+                    tweet_index++;
+                    line_index++;
+                } while (line[line_index] != '\n');
+                break;
+            }
+
+            if (line[line_index] == ',')
+            {
+                commaCounter++;
+            }
+
+            line_index++;
+        }
+        
+        clean(tweet);
+        // int index = 0;
+        // do{
+        //     std::cout << tweet[index];
+        //     index++;
+        // }while(tweet[index] != '\0');
+        //convert_and_store(sentiment, id, tweet);
+        //std::cout << std::endl;
     }
 
      fclose(stream);
@@ -207,7 +271,8 @@ int Analyzer::open_and_parse()
 
 int Analyzer::train()
 {
-    open_and_parse();
+    openTrain();
+    //openTest();
     //tokenize_map(Tweets);
     //decide_significance(Tokens);
     // std::map<DSString,Ratio>::iterator ij = Tokens.begin();

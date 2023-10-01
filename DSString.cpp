@@ -1,17 +1,4 @@
 #include "DSString.h"
-#include "string.h"
-
-/*
- * Implement the functions defined in DSString.h. You may add more functions as needed
- * for the project.
- *
- * Note that c-strings use `\0` as a terminator symbol
- * but your class should store its length in a member variable. Do not use c-string functions
- * from <string.h> or <cstring> other than for conversion from a c-string.
- *
- * you can use `strlen()` and `strcpy()` in your constructor or assignment operator...
- * when you convert a c-string into a DSString.
- */
 
 DSString::DSString()
 { // default constructor - called when DSString object is made without args
@@ -22,13 +9,15 @@ DSString::DSString()
 DSString::DSString(const char *txt)
 { // paramaterized constructor - called when DSString object is made WITH args
     len = 0;
-    while(txt[len] != '\0'){
+    while (txt[len] != '\0')
+    {
         len++;
     }
-    
+
     data = new char[len + 1];
-    
-    for(size_t i = 0; i < len; i++){
+
+    for (size_t i = 0; i < len; i++)
+    {
         data[i] = txt[i];
     }
     data[len] = '\0';
@@ -54,16 +43,18 @@ DSString::~DSString()
 
 DSString &DSString::operator=(const DSString &copy)
 { // copy assignment
-    if(data != copy.data){
+    if (data != copy.data)
+    {
         delete[] data;
         data = new char[copy.len];
         len = copy.len;
-        for(size_t i = 0; i < len; i++){
+        for (size_t i = 0; i < len; i++)
+        {
             data[i] = copy.data[i];
         }
         data[len] = '\0';
     }
- 
+
     return *this;
 }
 
@@ -82,19 +73,19 @@ DSString DSString::operator+(const DSString &appendString) const // Overloaded o
     const int size1 = len;
     const int size2 = appendString.len;
 
-    const int s = (size1 + size2); 
-    char* newString = new char[s+1]; //add 1 only in creation 
+    const int s = (size1 + size2);
+    char *newString = new char[s + 1]; // add 1 only in creation
 
     for (int i = 0; i < size1; i++)
     {
         newString[i] = data[i];
-        //std::cout << newString[i];
+        // std::cout << newString[i];
     }
     int j = 0;
     for (int i = size1; i < s; i++)
     {
         newString[i] = appendString.data[j];
-        //std::cout << newString[i];
+        // std::cout << newString[i];
         j++;
     }
 
@@ -105,8 +96,6 @@ DSString DSString::operator+(const DSString &appendString) const // Overloaded o
     return newDSString;
 }
 
-// Standard relational operators to compare and order your strings.
-// Feel free to add additional.
 bool DSString::operator==(const DSString &rhs) const
 {
     bool returnVal = true;
@@ -129,45 +118,38 @@ bool DSString::operator==(const DSString &rhs) const
 
 bool DSString::operator<(const DSString &rhs) const
 {
-    // if(len > rhs.len){
-    //      return false;
-    //  } else {
-    //      return true;
-    // }
-
-    // for(int i = 0; i < len; i++){
-    //     if(data[i] > rhs.data[i]){
-    //         return false;
-    //      }
-    //      if(data[i] < rhs.data[i]){
-    //          return true;
-    //      }
-    // }
-    // return false;
 
     int length;
-    if(len > rhs.len){
+    if (len > rhs.len)
+    {
         length = len;
-    } else {
+    }
+    else
+    {
         length = rhs.len;
     }
-    for(int i = 0; i < length; i++){
-        if(data[i] == '\0'){
+    for (int i = 0; i < length; i++)
+    {
+        if (data[i] == '\0')
+        {
             return true;
-        } else if(rhs.data[i] == '\0'){
+        }
+        else if (rhs.data[i] == '\0')
+        {
             return false;
         }
 
-        if(data[i] > rhs.data[i]){
+        if (data[i] > rhs.data[i])
+        {
             return false;
         }
-        if(data[i] < rhs.data[i]){
+        if (data[i] < rhs.data[i])
+        {
             return true;
         }
     }
 
     return false;
-   
 }
 
 bool DSString::operator!=(const DSString &rhs) const
@@ -190,17 +172,9 @@ bool DSString::operator!=(const DSString &rhs) const
 
 DSString DSString::substring(size_t start, size_t numChars) const
 {
-    /*returns a new string object that contains a
-     * sequence of characters from this string object.
-     *
-     * param start - the index of where to start
-     * param numChars - the number (count) of characters to copy into
-     *    the substring
-     * @return a DSString object containing the requested substring
-     */
 
     const size_t newSize = numChars;
-    char* newString = new char[newSize+1];
+    char *newString = new char[newSize + 1];
     for (size_t i = 0; i <= newSize; i++)
     {
         newString[i] = data[i + start];
@@ -212,7 +186,7 @@ DSString DSString::substring(size_t start, size_t numChars) const
     return newDSString;
 }
 
-void DSString::toLower()  // Returns a new string object with all characters in lowercase
+void DSString::toLower() // Returns a new string object with all characters in lowercase
 {
 
     for (size_t i = 0; i < len; i++)
@@ -221,18 +195,12 @@ void DSString::toLower()  // Returns a new string object with all characters in 
         {
             data[i] = data[i] + 32;
         }
-        
     }
-    
 }
 
 char *DSString::c_str() const
 {
-    /**
-     * the c_str function returns a pointer a null-terminated c-string holding the
-     * contents of this object. Since data already has a `\0`
-     * at the end of the string in DSString so you can just return a pointer to data.
-     **/
+
     return data;
 }
 
@@ -243,12 +211,6 @@ char *DSString::getData() const
 
 std::ostream &operator<<(std::ostream &output, const DSString &txt)
 {
-    /**
-     * Overloaded stream insertion operator to print the contents of this
-     * string to the output stream in the first argument. Remember:
-     * This operator needs to be implemented outside of the class as
-     * a friend because it operates on the stream and not the DSString object.
-     **/
     output << txt.getData();
     return output;
 }

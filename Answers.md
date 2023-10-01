@@ -2,7 +2,7 @@
 
 **Complete this document, commit your changes to Github and submit the repository URL to Canvas.** Keep your answers short and precise.
 
-Your Name:
+Your Name: Alex Geer
 
 Used free extension: [ ] 24 hrs or [ ] 48 hrs
 
@@ -37,8 +37,8 @@ Replace the following image with your diagram. You can draw it by hand and take 
 4. How do you know that you use proper memory management? I.e., how do you know that you do not have
    a memory leak?
 
-   > Your answer
+   > I made sure to continuously check my code for memory leaks using Valgrind. Valgrind tells me whether I have memory leaks. When sumbitting this program I, once again, checked to assure I had no memory leaks.
 
 5. What was the most challenging part of the assignment?
 
-   > Your answer
+   > The most challanging part of this assignment was dealing with pointers. I had a tough time working with the DSStrings. I'm not sure I had a good grasp on how pointers worked inside a program until this assignment. This project force me to overcome that weakness, despite it being a struggle.
