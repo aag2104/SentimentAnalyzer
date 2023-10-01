@@ -1,20 +1,20 @@
 #include "DSString.h"
 
-DSString::DSString()
-{ // default constructor - called when DSString object is made without args
-    data = new char[1];
-    data[0] = '\0';
-    len = 0;
+DSString::DSString() // default constructor - called when DSString object is made without args
+{
+    data = new char[1]; // sets data = to char array with size 1, allocates memory on heap
+    data[0] = '\0';     // sets index 0 to nullchar
+    len = 0;            // length, size 0 -> empty DSString
 }
-DSString::DSString(const char *txt)
-{ // paramaterized constructor - called when DSString object is made WITH args
-    len = 0;
-    while (txt[len] != '\0')
+DSString::DSString(const char *txt) // paramaterized constructor - called when DSString object is made WITH args
+{
+    len = 0;                 // start with length of 0
+    while (txt[len] != '\0') // until hitting end of txt, increment len by 1 (counter)
     {
-        len++;
+        len++; // gets length and iterates through while loop
     }
 
-    data = new char[len + 1];
+    data = new char[len + 1]; 
 
     for (size_t i = 0; i < len; i++)
     {
@@ -23,10 +23,10 @@ DSString::DSString(const char *txt)
     data[len] = '\0';
 }
 
-DSString::DSString(const DSString &copy_char)
+DSString::DSString(const DSString &copy_char) //invalid write of size 1
 { // copy constructor
     const int end = copy_char.len;
-    data = new char[copy_char.len];
+    data = new char[copy_char.len + 1];
 
     for (int i = 0; i < end; i++)
     {
@@ -41,12 +41,12 @@ DSString::~DSString()
     delete[] data;
 }
 
-DSString &DSString::operator=(const DSString &copy)
+DSString &DSString::operator=(const DSString &copy) //invalid write of size 1
 { // copy assignment
     if (data != copy.data)
     {
         delete[] data;
-        data = new char[copy.len];
+        data = new char[copy.len + 1];
         len = copy.len;
         for (size_t i = 0; i < len; i++)
         {

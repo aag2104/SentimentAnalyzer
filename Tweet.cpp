@@ -36,9 +36,7 @@ std::vector<DSString> Tweet::tokenize()
         {
             words.push_back(currWord); // store
             currWord = "";             // reset
-        }
-
-        if (currChar != ' ' && currChar != '\n') // if we are at a character (not space) and the character is not a newline
+        } else if (currChar != ' ' && currChar != '\n') // if we are at a character (not space) and the character is not a newline
         {
             char currC[2]; // convert currChar to char array so it can stored in a DSString
             currC[0] = currChar;
@@ -58,7 +56,7 @@ std::vector<DSString> Tweet::tokenize()
 
     for (int i = 0; i < words.size(); i++)
     { // for some reason i'm still storing blanks
-        if (words[i] == "\0")
+        if (words[i] == "\0" || words[i] == "")
         {
             words.erase(words.begin() + i);
         }
