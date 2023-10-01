@@ -228,9 +228,9 @@ int Analyzer::openTest()
         char id[11] = {0};
         char tweet[200] = {0};
 
-        for (int i = 2; i < 12; i++)
+        for (int i = 0; i < 10; i++)
         {
-            id[i - 2] = line[i];
+            id[i] = line[i];
         }
 
         int commaCounter = 0;
@@ -259,7 +259,6 @@ int Analyzer::openTest()
         }
 
         clean(tweet);
-        std::cout << id << ", " << tweet;
         convertToTweets(0, id, tweet); //sentiment unknown
     }
 
@@ -268,12 +267,12 @@ int Analyzer::openTest()
 }
 
 int Analyzer::iterateThroughTest(std::map<DSString, Tweet> testTweets){
-    // std::map<DSString,Tweet>::iterator ij = TestTweets.begin();
+    std::map<DSString,Tweet>::iterator ij = TestTweets.begin();
 
-    // for (ij=TestTweets.begin(); ij!=TestTweets.end(); ++ij){
-    //       std::cout << ij->first << "->" << ij->second << std::endl;
-    // }
-    
+    for (ij=TestTweets.begin(); ij!=TestTweets.end(); ++ij){
+          std::cout << ij->first << "->" << ij->second << std::endl;
+    }
+
     //tokenize ->
     //vector of words
     //iterate through vector -> search each element in Tokens map
@@ -302,7 +301,8 @@ void Analyzer::train()
 
 void Analyzer::predict(){
     openTest();
-    //iterateThroughTest(TestTweets);
+    TestTweets.erase("id,Date,Qu");
+    iterateThroughTest(TestTweets);
     //outputPredictions(TweetSums);
     
 }
