@@ -16,6 +16,9 @@ Ratio::Ratio(int one, int two, double three)
 
 double Ratio::calculate()
 {
+    if(denom == 0){
+        return 0;
+    }
     calculation = num / denom;
     return calculation;
 }

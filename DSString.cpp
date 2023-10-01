@@ -21,21 +21,30 @@ DSString::DSString()
 }
 DSString::DSString(const char *txt)
 { // paramaterized constructor - called when DSString object is made WITH args
-    data = new char[strlen(txt) + 1];
-    strcpy(data, txt);
-    len = strlen(data) + 1;
+    len = 0;
+    while(txt[len] != '\0'){
+        len++;
+    }
+    
+    data = new char[len + 1];
+    
+    for(size_t i = 0; i < len; i++){
+        data[i] = txt[i];
+    }
+    data[len] = '\0';
 }
 
 DSString::DSString(const DSString &copy_char)
 { // copy constructor
-    const int end = copy_char.length();
-    data = new char[copy_char.length()];
+    const int end = copy_char.len;
+    data = new char[copy_char.len];
 
     for (int i = 0; i < end; i++)
     {
         data[i] = copy_char.data[i];
     }
-    len = copy_char.length();
+    len = copy_char.len;
+    data[len] = '\0';
 }
 
 DSString::~DSString()
@@ -45,12 +54,16 @@ DSString::~DSString()
 
 DSString &DSString::operator=(const DSString &copy)
 { // copy assignment
-    if (strcmp(data, copy.data) != 0)
-    {
-        data = new char[copy.length()];
-        strcpy(data, (copy.data));
-        len = copy.length();
+    if(data != copy.data){
+        delete[] data;
+        data = new char[copy.len];
+        len = copy.len;
+        for(size_t i = 0; i < len; i++){
+            data[i] = copy.data[i];
+        }
+        data[len] = '\0';
     }
+ 
     return *this;
 }
 
@@ -67,27 +80,27 @@ char &DSString::operator[](size_t index)
 DSString DSString::operator+(const DSString &appendString) const // Overloaded operator+ which appends the string in the argument to this string
 {
     const int size1 = len;
-    const int size2 = appendString.length();
+    const int size2 = appendString.len;
 
-    const int s = (size1 + size2) - 1; // plus 1 to account for null char
-    char newString[s];
+    const int s = (size1 + size2); 
+    char* newString = new char[s+1]; //add 1 only in creation 
 
-    for (int i = 0; i < size1-1; i++)
+    for (int i = 0; i < size1; i++)
     {
         newString[i] = data[i];
         //std::cout << newString[i];
     }
     int j = 0;
-    for (int i = size1-1; i < s; i++)
+    for (int i = size1; i < s; i++)
     {
         newString[i] = appendString.data[j];
         //std::cout << newString[i];
         j++;
     }
 
-    int index = 0;
-
+    newString[s] = '\0';
     DSString newDSString(newString);
+    delete[] newString;
 
     return newDSString;
 }
@@ -116,30 +129,56 @@ bool DSString::operator==(const DSString &rhs) const
 
 bool DSString::operator<(const DSString &rhs) const
 {
-    bool returnVal = false;
-    int i = 0;
-    do
-    {
-        if (data[i] < rhs.data[i] || len != rhs.length())
-        {
-            returnVal = true;
-            break;
-        }
-        i++;
-    } while (data[i] != '\0' && rhs.data[i] != '\0');
+    // if(len > rhs.len){
+    //      return false;
+    //  } else {
+    //      return true;
+    // }
 
-    return returnVal;
+    // for(int i = 0; i < len; i++){
+    //     if(data[i] > rhs.data[i]){
+    //         return false;
+    //      }
+    //      if(data[i] < rhs.data[i]){
+    //          return true;
+    //      }
+    // }
+    // return false;
+
+    int length;
+    if(len > rhs.len){
+        length = len;
+    } else {
+        length = rhs.len;
+    }
+    for(int i = 0; i < length; i++){
+        if(data[i] == '\0'){
+            return true;
+        } else if(rhs.data[i] == '\0'){
+            return false;
+        }
+
+        if(data[i] > rhs.data[i]){
+            return false;
+        }
+        if(data[i] < rhs.data[i]){
+            return true;
+        }
+    }
+
+    return false;
+   
 }
 
 bool DSString::operator!=(const DSString &rhs) const
 {
 
-    if (length() != rhs.length())
+    if (len != rhs.len)
     {
         return false;
     }
 
-    for (size_t i = 0; i < length(); ++i)
+    for (size_t i = 0; i < len; ++i)
     {
         if (data[i] != rhs.data[i])
         {
@@ -160,33 +199,31 @@ DSString DSString::substring(size_t start, size_t numChars) const
      * @return a DSString object containing the requested substring
      */
 
-    const size_t newSize = numChars + 1;
-    char newString[newSize];
+    const size_t newSize = numChars;
+    char* newString = new char[newSize+1];
     for (size_t i = 0; i <= newSize; i++)
     {
         newString[i] = data[i + start];
     }
 
+    newString[newSize] = '\0';
     DSString newDSString(newString);
+    delete[] newString;
     return newDSString;
 }
 
-DSString DSString::toLower() const // Returns a new string object with all characters in lowercase
+void DSString::toLower()  // Returns a new string object with all characters in lowercase
 {
-    char newString[len];
+
     for (size_t i = 0; i < len; i++)
     {
         if (data[i] <= 90 && data[i] >= 65)
         {
-            newString[i] = data[i] + 32;
+            data[i] = data[i] + 32;
         }
-        else
-        {
-            newString[i] = data[i];
-        }
+        
     }
-    DSString newDSString(newString);
-    return newDSString;
+    
 }
 
 char *DSString::c_str() const
@@ -212,6 +249,6 @@ std::ostream &operator<<(std::ostream &output, const DSString &txt)
      * This operator needs to be implemented outside of the class as
      * a friend because it operates on the stream and not the DSString object.
      **/
-    output << txt.data;
+    output << txt.getData();
     return output;
 }

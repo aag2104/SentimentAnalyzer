@@ -17,7 +17,7 @@ public:
     int clean(char *);
     int tokenize_map(std::map<DSString, Tweet>);
     int store_words(std::vector<DSString>);
-    // int decide_significance(std::map<std::string, Ratio>);
+    int decide_significance(std::map<DSString, Ratio>);
     // predict
     // evaluate predictions
 };

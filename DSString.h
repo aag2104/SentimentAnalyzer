@@ -68,7 +68,7 @@ public:
      *
      * @return DSString
      */
-    DSString toLower() const; // look at the ASCII table for this!
+    void toLower(); // look at the ASCII table for this!
 
     /**
      * the c_str function returns a pointer a null-terminated c-string holding the

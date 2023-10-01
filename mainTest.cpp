@@ -6,5 +6,6 @@
 int main(){
     Analyzer analysis;
     analysis.train();
+    
     return(0);
 }

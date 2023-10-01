@@ -25,8 +25,8 @@ int main()
     std::vector<DSString> strings = {
         DSString("bbb"),
         DSString("aaa"),
-        DSString("ddd"),
-        DSString("eee"),
+        DSString("dddd"),
+        DSString("e"),
         DSString("ccc")};
 
     // find strings
@@ -41,8 +41,7 @@ int main()
     std::sort(strings.begin(), strings.end());
 
     for (const auto &s : strings)
-        std::cout
-            << s << "\n";
+        std::cout << s << "\n";
 
     // now we can do more efficient search using STL binary search
     std::cout << "found ddd: " << binary_search(strings.begin(), strings.end(), DSString("ddd")) << "\n";
