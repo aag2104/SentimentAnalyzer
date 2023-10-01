@@ -62,11 +62,11 @@ std::vector<DSString> Tweet::tokenize()
         }
     }
 
-    for (int i = 0; i < words.size(); i++) // print current vector -for testing purposes
-    {
-        std::cout << words[i] << "|";
-    }
-    std::cout << std::endl;
+    // for (int i = 0; i < words.size(); i++) // print current vector -for testing purposes
+    // {
+    //     std::cout << words[i] << "|";
+    // }
+    // std::cout << std::endl;
 
     return words;
 }

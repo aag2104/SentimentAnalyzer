@@ -105,7 +105,7 @@ int Analyzer::decideSignificance(std::map<DSString, Ratio>)
 
     for (it = Tokens.begin(); it != Tokens.end(); ++it)
     { // erase any contents that do not show up often enough or if their ratios fall between 1.1 and .9
-        if (Tokens[it->first].getNum() + Tokens[it->first].getDenom() < 5)
+        if (Tokens[it->first].numOccur() < 5)
         {
             Tokens.erase(it->first);
         } else if (Tokens[it->first].calculate() < 1.1 && Tokens[it->first].calculate() > .9){
@@ -138,7 +138,11 @@ int Analyzer::convertToTweets(char sentiment, char *id, char *tweet) // problem 
 
     Tweet txt(message, sentiment); 
 
-    Tweets.insert({id, txt});
+    if(sentiment == 0){
+        TestTweets.insert({id, txt});
+    } else {
+        Tweets.insert({id, txt});
+    }
 
     return 0;
 }
@@ -255,6 +259,7 @@ int Analyzer::openTest()
         }
 
         clean(tweet);
+        std::cout << id << ", " << tweet;
         convertToTweets(0, id, tweet); //sentiment unknown
     }
 
@@ -262,16 +267,46 @@ int Analyzer::openTest()
     return 0;
 }
 
-int Analyzer::train()
-{
-    openTrain();
-    // openTest();
-    tokenizeMap(Tweets);
-    decideSignificance(Tokens);
-      std::map<DSString,Ratio>::iterator ij = Tokens.begin();
+int Analyzer::iterateThroughTest(std::map<DSString, Tweet> testTweets){
+    // std::map<DSString,Tweet>::iterator ij = TestTweets.begin();
 
-    for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
-         std::cout << ij->first << "->" << ij->second << std::endl;
-    }
-    return 0;
+    // for (ij=TestTweets.begin(); ij!=TestTweets.end(); ++ij){
+    //       std::cout << ij->first << "->" << ij->second << std::endl;
+    // }
+    
+    //tokenize ->
+    //vector of words
+    //iterate through vector -> search each element in Tokens map
+    //if in Tokens map, at Tokens[value].calc() to tweetSum
+    //at the end of loop,
+    //store id and tweetSum in map
+}
+
+int Analyzer::outputPredictions(std::map<DSString, int> testSums){
+    int sentiment;
+    //output all tweets -> sentiment, idNum
+    //if int (tweetSum) is less than 0, sentiment == 0, else sentiment = 4
+}
+
+void Analyzer::train()
+{
+    //openTrain();
+    //tokenizeMap(Tweets);
+    //decideSignificance(Tokens);
+      //std::map<DSString,Ratio>::iterator ij = Tokens.begin();
+
+    // for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
+    //      std::cout << ij->first << "->" << ij->second << std::endl;
+    // }
+}
+
+void Analyzer::predict(){
+    openTest();
+    //iterateThroughTest(TestTweets);
+    //outputPredictions(TweetSums);
+    
+}
+
+void Analyzer::evaluatePredictions(){
+   //outputAccuracy();
 }
