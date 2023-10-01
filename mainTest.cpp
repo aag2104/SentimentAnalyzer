@@ -8,7 +8,7 @@ int main(){
     
     analysis.train();
     
-    analysis.predict();
+    //analysis.predict();
     //analysis.evaluatePredictions();
     
     return(0);

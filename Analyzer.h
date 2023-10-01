@@ -21,13 +21,12 @@ public:
     int decideSignificance(std::map<DSString, Ratio>); // decides whether to keep certain words in Tokens map, gets rid of words that will confuse program
 
     int openTest(); // opens testing file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
-    int iterateThroughTest(std::map<DSString, Tweet>);
-    int outputPredictions(std::map<DSString, int>);
+    int iterateThroughTest();
+    int outputPredictions();
 
     void outputAccuracy();
 
-    int clean(char *);                          // gets rid of special characters and unnecessary punctuation
-    int convertToTweets(char, char *, char *);  // converts tweet data and sentiments/id numbers into tweet objects -> inserts tweet objects into Tweets map
+    char* clean(char*);                          // gets rid of special characters and unnecessary punctuation
     int tokenizeMap(std::map<DSString, Tweet>); // iterates through map of tweets and calls Tweet class's tokenize function -> calls store words
 
     void predict();             // overarching method- runs functions used to make predictions on testing data

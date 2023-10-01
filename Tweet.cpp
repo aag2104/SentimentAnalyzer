@@ -15,8 +15,10 @@ std::vector<DSString> Tweet::tokenize()
 {
     std::vector<DSString> words;
 
-    DSString sent = &sentiment;
-
+    char sentChar[2];
+    sentChar[0] = sentiment;
+    DSString sent = sentChar;
+    
     words.push_back(sent);
 
     int index = 0;

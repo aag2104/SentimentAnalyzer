@@ -181,7 +181,7 @@ DSString DSString::substring(size_t start, size_t numChars) const // returns onl
     return newDSString;              // return new DSString
 }
 
-void DSString::toLower() // returns a new string object with all characters in lowercase
+DSString DSString::toLower() // returns a new string object with all characters in lowercase
 {
     for (size_t i = 0; i < len; i++) // iterate through data
     {
@@ -190,6 +190,7 @@ void DSString::toLower() // returns a new string object with all characters in l
             data[i] = data[i] + 32; // convert to lowercase
         }
     }
+    return *this;
 }
 
 char *DSString::c_str() const // returns current data value
