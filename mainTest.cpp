@@ -5,8 +5,11 @@
 
 int main(){
     Analyzer analysis;
+    
     analysis.train();
+    
     analysis.predict();
+    //analysis.evaluatePredictions();
     
     return(0);
 }
