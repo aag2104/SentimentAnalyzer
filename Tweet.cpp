@@ -1,13 +1,13 @@
 #include "Tweet.h"
 
-Tweet::Tweet() //default constructor 
+Tweet::Tweet() // default constructor
 {
-    sentiment = ' ';
-    message = "empty";
+    sentiment = ' ';   // set sentiment to empty char (space)
+    message = "empty"; // set message to "empty"
 }
-Tweet::Tweet(DSString tweetTxt, char sent) //parameterized constructor
+Tweet::Tweet(DSString tweetTxt, char sent) // parameterized constructor
 {
-    sentiment = sent;
+    sentiment = sent; // set private vars to args values ->
     message = tweetTxt;
 }
 
@@ -36,7 +36,8 @@ std::vector<DSString> Tweet::tokenize()
         {
             words.push_back(currWord); // store
             currWord = "";             // reset
-        } else if (currChar != ' ' && currChar != '\n') // if we are at a character (not space) and the character is not a newline
+        }
+        else if (currChar != ' ' && currChar != '\n') // if we are at a character (not space) and the character is not a newline
         {
             char currC[2]; // convert currChar to char array so it can stored in a DSString
             currC[0] = currChar;
