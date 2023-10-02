@@ -16,11 +16,7 @@ Ratio::Ratio(int one, int two, double three) // sets num, denom, and calculation
 
 double Ratio::calculate()
 {
-    if (denom == 0)
-    { // cannot divide by zero -> so, if denom == zero, return 0 as calculation
-        return 0;
-    }
-    calculation = num / denom; // divide to get calculation
+    calculation = num - denom; // divide to get calculation
     return calculation;        // return value
 }
 

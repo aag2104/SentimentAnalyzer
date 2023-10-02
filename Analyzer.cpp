@@ -15,7 +15,7 @@ char* Analyzer::clean(char* tweet)
         currChar = tweet[index];
         if (tweet[index] < 0 || tweet[index] > 128)
         {
-            tweet[index] = ' '; // keep this in mind when you are tokenizing
+            tweet[index] = ' '; 
         }
 
         if ((tweet[index] >= 34 && tweet[index] <= 38) || (tweet[index] >= 40 && tweet[index] <= 47))
@@ -54,8 +54,8 @@ int Analyzer::tokenizeMap(std::map<DSString, Tweet> messages) // returns vector 
 
     for (it = messages.begin(); it != messages.end(); ++it)
     {
-        
-        storeWords(it->second.tokenize()); // returns vector of strings with sentiment of tweet in index[0]
+        //std::cout << it->second << std::endl;
+        //storeWords(it->second.tokenize()); // returns vector of strings with sentiment of tweet in index[0]
     }
 
     return 0;
@@ -66,7 +66,8 @@ int Analyzer::storeWords(std::vector<DSString> tweet) // iterates through vector
 {
     DSString sentiment = tweet[0];
 
-    for (int i = 1; i < tweet.size(); i++)
+
+    for (size_t i = 1; i < tweet.size(); i++)
     {
         if (Tokens.find(tweet[i]) == Tokens.end())
         { // not found in Tokens map
@@ -101,38 +102,21 @@ int Analyzer::storeWords(std::vector<DSString> tweet) // iterates through vector
 
 int Analyzer::decideSignificance(std::map<DSString, Ratio>)
 {
-
     std::map<DSString, Ratio>::iterator it = Tokens.begin();
 
     for (it = Tokens.begin(); it != Tokens.end(); ++it)
-    { // erase any contents that do not show up often enough or if their ratios fall between 1.1 and .9
-        int num = it->second.numOccur();
-        if (num < 5)
-        {
-            Tokens.erase(it->first);
-        } else if (it->second.calculate() < 1.1 && it->second.calculate() > .9){
-            Tokens.erase(it->first);
-        }
-    }
-
-    std::map<DSString, Ratio>::iterator it2 = Tokens.begin();
-
-    for (it2 = Tokens.begin(); it2 != Tokens.end(); ++it2)
-    { // calculate whats left in the map
-        if (it2->second.calculate() > 1.1)
-        {
-            it2->second.setCalc(1); // positive
-        }
-        else
-        {
-            it2->second.setCalc(-1); // negative
+    { 
+        if(it->second.calculate() < 0){
+            it->second.setCalc(-1);
+        } else {
+            it->second.setCalc(1);
         }
     }
 
     return 0;
 }
 
-int Analyzer::openTrain()
+int Analyzer::openTrain() //char* trainingData
 {
     char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/train_dataset_20k.csv";
     FILE *stream;
@@ -140,25 +124,30 @@ int Analyzer::openTrain()
     // set up the buffer
     char line[10000]; // maximum line length
 
-    stream = fopen(filename, "r");
+    stream = fopen(filename, "r"); //trainingData
     if (stream == NULL)
     {
         std::cerr << "Opening the file failed!" << std::endl;
         return (-1);
     }
 
+    fgets(line, sizeof(line), stream);
+
     while (fgets(line, sizeof(line), stream) != NULL)
     {
-        char sentiment;
-        char id[11] = {0};
+        char* sentiment = new char[2];
+        char* id = new char[11];
+
         char tweet[200] = {0};
 
-        sentiment = line[0];
+        sentiment[0] = line[0];
+        sentiment[1] = '\0';
 
         for (int i = 2; i < 12; i++)
         {
             id[i - 2] = line[i];
         }
+        id[10] = '\0';
 
         int commaCounter = 0;
         int line_index = 0;
@@ -187,11 +176,14 @@ int Analyzer::openTrain()
 
         char* cleanTweet = clean(tweet);
         DSString message = cleanTweet;
-        DSString idNum = id;
+        DSString idNum(id);
+        delete[] id;
+        DSString sent(sentiment);
+        delete[] sentiment;
         message = message.toLower();
-        Tweet txt(message, sentiment); 
+        Tweet txt(message, sent); 
         
-        Tweets.insert({id, txt});
+        Tweets.insert({idNum, txt});
     
     }
 
@@ -214,11 +206,14 @@ int Analyzer::openTest()
         return (-1);
     }
 
+    fgets(line, sizeof(line), stream);
+
     while (fgets(line, sizeof(line), stream) != NULL)
     {
         char id[11] = {0};
         char tweet[200] = {0};
-        char sentiment = '3';
+        char sentiment[2] = {0};
+        sentiment[0] = '3';
 
         for (int i = 0; i < 10; i++)
         {
@@ -250,9 +245,14 @@ int Analyzer::openTest()
             line_index++;
         }
 
-        clean(tweet);
-        //convertToTweets(sentiment, id, tweet); //sentiment unknown
-        //     TestTweets.insert({id, txt});
+        char* cleanTweet = clean(tweet);
+        DSString message = cleanTweet;
+        DSString idNum = id;
+        DSString sent = sentiment;
+        message = message.toLower();
+        Tweet txt(message, sent); 
+    
+        TestTweets.insert({id, txt});
     }
 
     fclose(stream);
@@ -268,7 +268,7 @@ int Analyzer::iterateThroughTest(){
           for(size_t i = 0; i < words.size(); i++){
             if(Tokens.find(words[i]) != Tokens.end()){ //if vector word is in map...
                 auto it = Tokens.find(words[i]);
-                tweetSum += it->second.getCalc();
+                tweetSum += it->second.calculate();
             }
           }
         std::cout << tweetSum << std::endl;
@@ -311,29 +311,32 @@ int Analyzer::outputPredictions(){
     //if int (tweetSum) is less than 0, sentiment == 0, else sentiment = 4
 }
 
-void Analyzer::train()
+void Analyzer::train() //char* trainingData
 {
-    openTrain();
+    openTrain(); //trainingData
     tokenizeMap(Tweets);
     //decideSignificance(Tokens);
-     std::map<DSString,Ratio>::iterator ij = Tokens.begin();
+    std::map<DSString,Ratio>::iterator ij = Tokens.begin();
 
     for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
-         std::cout << ij->first << "->" << ij->second << std::endl;
+         std::cout << ij->first << "," << ij->second << "," << ij->second.calculate() << std::endl;
     }
 }
 
 void Analyzer::predict(){
-    //openTest();
-    //TestTweets.erase("id,Date,Qu");
-    //iterateThroughTest();
-    //std::map<DSString, Ratio>::iterator it = Tokens.begin();
+    // openTest();
+    // TestTweets.erase("id,Date,Qu");
+    // iterateThroughTest();
 
-    // for (it = Tokens.begin(); it != Tokens.end(); ++it)
-    // { 
-    //     std::cout << Tokens[it->first].getCalc() << std::endl;
+
+    // //outputPredictions();
+
+    // std::map<DSString,int>::iterator ij = TweetSums.begin();
+
+    // for (ij=TweetSums.begin(); ij!=TweetSums.end(); ++ij){
+    //       std::cout << ij->first << "," << ij->second;
+    //       std::cout << std::endl;
     // }
-    //outputPredictions();
     
 }
 

@@ -2,20 +2,20 @@
 
 Tweet::Tweet() // default constructor
 {
-    sentiment = ' ';   // set sentiment to empty char (space)
+    sentiment = "";   // set sentiment to empty char (space)
     message = "empty"; // set message to "empty"
 }
-Tweet::Tweet(DSString tweetTxt, char sent) // parameterized constructor
+Tweet::Tweet(DSString tweetTxt, DSString sent) // parameterized constructor
 {
     sentiment = sent; // set private vars to args values ->
     message = tweetTxt;
 }
 
-std::vector<DSString> Tweet::tokenize()
+std::vector<DSString> Tweet::tokenize() //splits tweets into words and outputs a vector of the tweet's words (separated)
 {
-    std::vector<DSString> words;
-    char currChar;
-    DSString currWord = "";
+    std::vector<DSString> words; //vector where words will be stored
+    char currChar; //char that holds current character 
+    words.push_back(sentiment);
 
     for(size_t i = 0; i < message.length(); i++){
         currChar = message[i];
@@ -23,12 +23,17 @@ std::vector<DSString> Tweet::tokenize()
              int count = 0;
              do{
                 count++;
+                if(i+count >= message.length()){
+                    break;
+                }
                 currChar = message[i+count];
              }while(currChar != ' ');
-            currWord = message.substring(i, count);
-            words.push_back(currWord);
-            currWord = "";
+            if(i+count < message.length()){
+                DSString currWord = message.substring(i, count);
+                words.push_back(currWord);
+            }
             i += (count-1);
+
         }
     }
 
@@ -37,11 +42,11 @@ std::vector<DSString> Tweet::tokenize()
     // }
     // std::cout << std::endl;
 
-     return words;
+     return words; //return filled vector
 
 }
 
-char Tweet::getSentiment()
+DSString Tweet::getSentiment()
 {
     return sentiment;
 }
