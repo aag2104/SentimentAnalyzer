@@ -317,7 +317,7 @@ void Analyzer::outputAccuracy(){
     double numInDataSet = 0;
     double accuracy;
     FILE *fp;
-    fp = fopen ("/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data","w");
+    fp = fopen ("/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/accuracy.txt","w");
     
     std::map<DSString,DSString>::iterator it1 = Answers.begin();
     std::map<DSString,char>::iterator it2 = Predictions.begin();
