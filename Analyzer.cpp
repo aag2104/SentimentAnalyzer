@@ -322,9 +322,9 @@ void Analyzer::outputAccuracy(){
     std::map<DSString,DSString>::iterator it1 = Answers.begin();
     std::map<DSString,char>::iterator it2 = Predictions.begin();
 
-    for (it2=Predictions.begin(); it2!=Predictions.end(); ++it1){ //finding accuracy
+    for (it1=Answers.begin(); it1!=Answers.end(); ++it1){ //finding accuracy
         
-         if(Answers.find(it2->first) != Answers.end()){
+        if(Answers.find(it2->first) != Answers.end()){
             char* predictionsSent = new char[2];
             predictionsSent[0] = it2->second;
             predictionsSent[1] = '\0';
@@ -336,25 +336,34 @@ void Analyzer::outputAccuracy(){
             if(sent == i->second){
                  correct++;
             }
-
-         }
-        it1++;
-        numInDataSet++;
+        }
+         it2++;
+         numInDataSet++;
     }
     
     accuracy = correct/numInDataSet;
-    std::cout << accuracy;
-    fprintf(fp, "%f", accuracy);
-    fputs("\n", fp);
+   
+    std::map<DSString,char>::iterator it3 = Predictions.begin();
 
-    // std::map<DSString,DSString>::iterator it3 = Answers.begin();
-    // std::map<DSString,char>::iterator it4 = Predictions.begin();
 
-    // for (it3=Answers.begin(); it3!=Answers.end(); ++it3){ //writing to file
-    //     fputc(it4->second, fp);
-    //     fputs(it3->second.getData(), fp);
-    //     it4++;
-    // }
+    for (const auto& output: Answers) {
+        
+        fputc(it3->second, fp);
+        fputs(", ", fp);
+
+        //char* sent = {output.second.getData()};
+        //fputs(sent, fp);
+        fputs(", ", fp);
+
+        auto i = Answers.find(it3->first);
+
+        //char* 
+
+        
+        
+         fputs("\n", fp);
+         it3++; 
+    } 
     
 
     fclose(fp);
