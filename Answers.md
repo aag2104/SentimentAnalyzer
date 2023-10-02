@@ -4,7 +4,7 @@
 
 Your Name: Alex Geer
 
-Used free extension: [ ] 24 hrs or [ ] 48 hrs
+Used free extension: [X] 24 hrs or [ ] 48 hrs
 
 [ ] Early submission (48 hrs)
 
