@@ -11,6 +11,8 @@ private:
     std::map<DSString, Ratio> Tokens; // map that holds words and their cooresponding good:bad ratios
     std::map<DSString, Tweet> TestTweets; // map that holds tweets and their cooresponding id numbers
     std::map<DSString, int> TweetSums; // map that holds tweet id numbers and their their prediction (whether the tweet leans good of bad)
+    std::map<DSString, char> Predictions;
+    std::map<DSString, DSString> Answers;
 
 
 public:
@@ -32,6 +34,7 @@ public:
     int outputPredictions(); // outputs file with predictions
     void evaluatePredictions(); // compares predictions with true dataset (answers) and calculates accuracy
     void outputAccuracy(); // outputs accuracy file
+    int openAnswers();
 
 };
 

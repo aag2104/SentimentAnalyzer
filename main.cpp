@@ -12,8 +12,8 @@ int main(){ //int argc, char** argv
     //argv[2] = "data/test_dataset_10k.csv"
     //argv[3] = 
     
-    //analysis.predict();
-    //analysis.evaluatePredictions();
+    analysis.predict();
+    analysis.evaluatePredictions();
     
     //paste in terminal when you run 
     //./sentiment data/train_dataset_20k.csv data/test_dataset_10k.csv data/test_dataset_sentiment_10k.csv results.csv accuracy.txt
