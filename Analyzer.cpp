@@ -342,27 +342,25 @@ void Analyzer::outputAccuracy(){
     }
     
     accuracy = correct/numInDataSet;
-   
-    std::map<DSString,char>::iterator it3 = Predictions.begin();
+    fprintf(fp, "%.3f", accuracy);
+    fputs("\n", fp);
 
 
-    for (const auto& output: Answers) {
+    for (const auto& output: Predictions) {
         
-        fputc(it3->second, fp);
+        fputc(output.second, fp);
+        fputs(", ", fp);
+        
+        auto i = Answers.find(output.first);
+
+        char* sent = i->second.getData();
+        fputs(sent, fp);
         fputs(", ", fp);
 
-        //char* sent = {output.second.getData()};
-        //fputs(sent, fp);
-        fputs(", ", fp);
-
-        auto i = Answers.find(it3->first);
-
-        //char* 
-
+        char* id = output.first.getData();
+        fputs(id, fp);
         
-        
-         fputs("\n", fp);
-         it3++; 
+        fputs("\n", fp);
     } 
     
 
