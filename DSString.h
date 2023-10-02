@@ -50,7 +50,7 @@ public:
      **/
     bool operator==(const DSString &) const;
     bool operator<(const DSString &) const;
-    bool operator!=(const DSString &) const; //additional operator added for necessary comparisons
+    bool operator!=(const DSString &) const; // additional operator added for necessary comparisons
 
     /**
      * The substring method returns a new string object that contains a

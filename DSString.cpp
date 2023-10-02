@@ -45,9 +45,10 @@ DSString &DSString::operator=(const DSString &copy) // copy assignment
 {
     if (data != copy.data) // is data and copy.data aren't already equal...
     {
-        if(data){ // if null ptr
+        if (data)
+        {                  // if null ptr
             delete[] data; // delete whatever is current held in data (we do not need it anymore)
-        }           
+        }
         data = new char[copy.len + 1];   // len + 1 because [size] != last index, but last index+1
         len = copy.len;                  // set data's len to copy's len
         for (size_t i = 0; i < len; i++) // iterate through length of copy/data
@@ -170,7 +171,8 @@ bool DSString::operator!=(const DSString &rhs) const // overloads != operator
 
 DSString DSString::substring(size_t start, size_t numChars) const // returns only a portion of a DSString
 {
-    if(start + numChars > len){
+    if (start + numChars > len)
+    {
         std::cout << "out of bounds" << std::endl;
         return DSString("");
     }

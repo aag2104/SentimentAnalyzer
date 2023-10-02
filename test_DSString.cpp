@@ -5,7 +5,7 @@
 #include "DSString.h"
 
 int main()
-{  
+{
     DSString myString = "Hello, World!";
     std::cout << myString << "\n";
 
