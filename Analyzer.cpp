@@ -6,10 +6,10 @@
 
 #include "Analyzer.h"
 
-char* Analyzer::clean(char* tweet)
+char* Analyzer::clean(char* tweet) //cleans out unecessary punctuation and special characters in tweet
 {
-    int index = 0;
-    char currChar = ' ';
+    int index = 0; //keeps track of index values
+    char currChar = ' '; //keeps track of current character in tweet
     do
     {
         currChar = tweet[index];
@@ -17,32 +17,26 @@ char* Analyzer::clean(char* tweet)
         {
             tweet[index] = ' '; 
         }
-
         if ((tweet[index] >= 34 && tweet[index] <= 38) || (tweet[index] >= 40 && tweet[index] <= 47))
         {
             tweet[index] = ' ';
         }
-
         if ((tweet[index] >= 58 && tweet[index] <= 62) || tweet[index] == 64)
         {
             tweet[index] = ' ';
         }
-
         if ((tweet[index] >= 91 && tweet[index] <= 96) || (tweet[index] >= 123 && tweet[index] <= 126))
         {
             tweet[index] = ' ';
         }
-
         if (tweet[index] == '\n')
         {
             tweet[index] = ' ';
         }
-
         if ((tweet[index] >= 0 && tweet[index] <= 31) || tweet[index] == 127)
         {
             tweet[index] = ' ';
         }
-
         index++;
     } while (currChar != '\0');
     return tweet;
@@ -64,7 +58,6 @@ int Analyzer::tokenizeMap(std::map<DSString, Tweet> messages) // returns vector 
 int Analyzer::storeWords(std::vector<DSString> tweet) // iterates through vector and stores words with ratio values/edits current ratio values
 {
     DSString sentiment = tweet[0];
-
 
     for (size_t i = 1; i < tweet.size(); i++)
     {
@@ -115,15 +108,15 @@ int Analyzer::decideSignificance(std::map<DSString, Ratio>)
     return 0;
 }
 
-int Analyzer::openTrain() //char* trainingData
+int Analyzer::openTrain(char* trainingData) //char* trainingData
 {
-    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/train_dataset_20k.csv";
-    FILE *stream;
+    //char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/train_dataset_20k.csv";
+    //FILE *stream;
 
     // set up the buffer
     char line[10000]; // maximum line length
 
-    stream = fopen(filename, "r"); //trainingData
+    stream = fopen(trainingData, "r"); //trainingData
     if (stream == NULL)
     {
         std::cerr << "Opening the file failed!" << std::endl;
@@ -190,15 +183,15 @@ int Analyzer::openTrain() //char* trainingData
     return 0;
 }
 
-int Analyzer::openTest()
+int Analyzer::openTest(char* testingData)
 {
-    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104/data/test_dataset_10k.csv";
-    FILE *stream;
+    //char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104/data/test_dataset_10k.csv";
+    //FILE *stream;
 
     // set up the buffer
     char line[1000]; // maximum line length
 
-    stream = fopen(filename, "r");
+    stream = fopen(testingData, "r");
     if (stream == NULL)
     {
         std::cerr << "Opening the file failed!" << std::endl;
@@ -217,7 +210,6 @@ int Analyzer::openTest()
         sentiment[0] = '3';
         sentiment[1] = '\0';
         
-
         for (int i = 0; i < 10; i++)
         {
             id[i] = line[i];
@@ -265,14 +257,14 @@ int Analyzer::openTest()
     return 0;
 }
 
-int Analyzer::openAnswers(){
-    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/test_dataset_sentiment_10k.csv";
-    FILE *stream;
+int Analyzer::openAnswers(char* sentiments){
+    //char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/test_dataset_sentiment_10k.csv";
+    //FILE *stream;
     
     // set up the buffer
     char line[1000]; // maximum line length
 
-    stream = fopen(filename, "r");
+    stream = fopen(sentiments, "r");
     if (stream == NULL)
     {
         std::cerr << "Opening the file failed!" << std::endl;
@@ -286,23 +278,19 @@ int Analyzer::openAnswers(){
         char* sentiment = new char[2];
         char* id = new char[11];
 
-
         sentiment[0] = line[0];
         sentiment[1] = '\0';
         
-
         for (int i = 2; i < 12; i++)
         {
             id[i - 2] = line[i];
         }
         id[10] = '\0';
-
         
         DSString idNum(id);
         delete[] id;
         DSString sent(sentiment);
         delete[] sentiment;
-
         
         Answers.insert({idNum, sent});
     }
@@ -312,13 +300,14 @@ int Analyzer::openAnswers(){
     
 }
 
-void Analyzer::outputAccuracy(){
+void Analyzer::outputAccuracy(char* accuracy){
     int correct = 0;
     double numInDataSet = 0;
     double accuracy;
     FILE *fp;
-    fp = fopen ("/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/accuracy.txt","w");
-    
+    //fp = fopen ("/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/accuracy.txt","w");
+    fp = fopen (accuracy, "w");
+
     std::map<DSString,DSString>::iterator it1 = Answers.begin();
     std::map<DSString,char>::iterator it2 = Predictions.begin();
 
@@ -345,7 +334,6 @@ void Analyzer::outputAccuracy(){
     fprintf(fp, "%.3f", accuracy);
     fputs("\n", fp);
 
-
     for (const auto& output: Predictions) {
         
         fputc(output.second, fp);
@@ -363,7 +351,6 @@ void Analyzer::outputAccuracy(){
         fputs("\n", fp);
     } 
     
-
     fclose(fp);
 }
 
@@ -379,25 +366,18 @@ int Analyzer::iterateThroughTest(){
                 tweetSum += it->second.calculate();
             }
           }
-        //std::cout << tweetSum << std::endl;
         DSString id = ij->first;
         TweetSums.insert({id, tweetSum}); 
     }
 
-
-    //tokenize ->
-    //vector of words
-    //iterate through vector -> search each element in Tokens map
-    //if in Tokens map, at Tokens[value].calc() to tweetSum
-    //at the end of loop,
-    //store id and tweetSum in map
 }
 
-int Analyzer::outputPredictions(){
+int Analyzer::outputPredictions(char* results){
     char sentiment;
     
      FILE *fp;
-     fp = fopen ("/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/results.csv", "w");
+     //fp = fopen ("/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/results.csv", "w");
+     fp = fopen (results, "w");
 
     for (const auto& tweet: TweetSums) {
         if(tweet.second < 0){
@@ -406,7 +386,7 @@ int Analyzer::outputPredictions(){
             sentiment = '4';
         }
         Predictions.insert({tweet.first, sentiment});
-        //std::cout << tweet.first <<  "," << sentiment << std::endl;
+        
          char* idNum = {tweet.first.getData()};
          fputc(sentiment, fp);
          fputs(", ", fp);
@@ -416,47 +396,24 @@ int Analyzer::outputPredictions(){
     }  
 
     fclose(fp);
-    //output all tweets -> sentiment, idNum
-    //if int (tweetSum) is less than 0, sentiment == 0, else sentiment = 4
 }
 
-void Analyzer::train() //char* trainingData
+void Analyzer::train(char* trainingData) //char* trainingData
 {
-    openTrain(); //trainingData
+    openTrain(trainingData); //trainingData
     tokenizeMap(Tweets);
     decideSignificance(Tokens);
-    // std::map<DSString,Ratio>::iterator ij = Tokens.begin();
-
-    // for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
-    //      std::cout << ij->first << "," << ij->second << "," << ij->second.getCalc() << std::endl;
-    // }
 }
 
-void Analyzer::predict(){
-    openTest();
+void Analyzer::predict(char* testingData, char* results){
+    openTest(testingData);
     TestTweets.erase("id,Date,Qu");
-
     iterateThroughTest();
-
-
-    outputPredictions();
-
-    // std::map<DSString,int>::iterator ij = TweetSums.begin();
-
-    // for (ij=TweetSums.begin(); ij!=TweetSums.end(); ++ij){
-    //       std::cout << ij->first << "," << ij->second;
-    //       std::cout << std::endl;
-    // }
+    outputPredictions(results);
     
 }
 
-void Analyzer::evaluatePredictions(){
-   openAnswers();
-    // std::map<DSString,DSString>::iterator ij = Answers.begin();
-
-    // for (ij=Answers.begin(); ij!=Answers.end(); ++ij){
-    //       std::cout << ij->first << "," << ij->second;
-    //       std::cout << std::endl;
-    // }
-   outputAccuracy();
+void Analyzer::evaluatePredictions(char* sentimentData, char* accuracy){
+   openAnswers(sentimentData);
+   outputAccuracy(accuracy);
 }
