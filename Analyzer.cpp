@@ -54,6 +54,7 @@ int Analyzer::tokenizeMap(std::map<DSString, Tweet> messages) // returns vector 
 
     for (it = messages.begin(); it != messages.end(); ++it)
     {
+        
         storeWords(it->second.tokenize()); // returns vector of strings with sentiment of tweet in index[0]
     }
 
@@ -133,11 +134,11 @@ int Analyzer::decideSignificance(std::map<DSString, Ratio>)
 
 int Analyzer::openTrain()
 {
-    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104/data/train_dataset_20k.csv";
+    char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/train_dataset_20k.csv";
     FILE *stream;
 
     // set up the buffer
-    char line[1000]; // maximum line length
+    char line[10000]; // maximum line length
 
     stream = fopen(filename, "r");
     if (stream == NULL)
@@ -189,11 +190,9 @@ int Analyzer::openTrain()
         DSString idNum = id;
         message = message.toLower();
         Tweet txt(message, sentiment); 
-        // if(sentiment == '3'){
-    //     TestTweets.insert({id, txt});
-    // } else {
-    //     Tweets.insert({id, txt});
-    // }
+        
+        Tweets.insert({id, txt});
+    
     }
 
     fclose(stream);
@@ -253,6 +252,7 @@ int Analyzer::openTest()
 
         clean(tweet);
         //convertToTweets(sentiment, id, tweet); //sentiment unknown
+        //     TestTweets.insert({id, txt});
     }
 
     fclose(stream);
@@ -315,8 +315,8 @@ void Analyzer::train()
 {
     openTrain();
     tokenizeMap(Tweets);
-    decideSignificance(Tokens);
-    std::map<DSString,Ratio>::iterator ij = Tokens.begin();
+    //decideSignificance(Tokens);
+     std::map<DSString,Ratio>::iterator ij = Tokens.begin();
 
     for (ij=Tokens.begin(); ij!=Tokens.end(); ++ij){
          std::cout << ij->first << "->" << ij->second << std::endl;

@@ -61,6 +61,6 @@ int Ratio::numOccur() // counts number of occurrences
 
 std::ostream &operator<<(std::ostream &output, const Ratio &rat)
 {
-    output << rat.num + rat.denom; //<- prints with << operator is used before Ratio object
+    output << rat.num << "/" << rat.denom; //<- prints with << operator is used before Ratio object
     return output;
 }
