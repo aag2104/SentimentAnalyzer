@@ -105,7 +105,7 @@ void Analyzer::decideSignificance(std::map<DSString, Ratio>) // decides whether 
     }
 }
 
-void Analyzer::openTrain(char *trainingData) // pass in argv
+int Analyzer::openTrain(char *trainingData) // pass in argv
 {
     FILE *stream;
 
@@ -175,6 +175,7 @@ void Analyzer::openTrain(char *trainingData) // pass in argv
     }
 
     fclose(stream);
+    return 0;
 }
 
 int Analyzer::openTest(char *testingData)

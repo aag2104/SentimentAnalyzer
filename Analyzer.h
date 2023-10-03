@@ -17,7 +17,7 @@ private:
 public:
     // methods that deal with training data:
     void train(char *);                                // overarching method- runs training functions
-    void openTrain(char *);                             // opens training file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
+    int openTrain(char *);                             // opens training file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
     void storeWords(std::vector<DSString>);             // iterates through vector of words and stores them in Tokens map with accurate ratios
     void decideSignificance(std::map<DSString, Ratio>); // decides whether to keep certain words in Tokens map, gets rid of words that will confuse program
 
