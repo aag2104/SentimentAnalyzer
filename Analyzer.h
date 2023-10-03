@@ -16,21 +16,21 @@ private:
 
 public:
     // methods that deal with training data:
-    void train(char *);                                // overarching method- runs training functions
-    int openTrain(char *);                             // opens training file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
+    void train(char *);                                 // overarching method- runs training functions
+    int openTrain(char *);                              // opens training file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
     void storeWords(std::vector<DSString>);             // iterates through vector of words and stores them in Tokens map with accurate ratios
     void decideSignificance(std::map<DSString, Ratio>); // decides whether to keep certain words in Tokens map, gets rid of words that will confuse program
 
     // methods that deal with testing data:
-    int openTest(char *);     // opens testing file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
-    int iterateThroughTest(); // iterates through test tweets and stores their data in TweetSums
+    int openTest(char *);      // opens testing file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
+    void iterateThroughTest(); // iterates through test tweets and stores their data in TweetSums
 
     // methods that deal with both testing and traing data:
     char *clean(char *);                         // gets rid of special characters and unnecessary punctuation
     void tokenizeMap(std::map<DSString, Tweet>); // iterates through map of tweets and calls Tweet class's tokenize function -> calls store words
 
     void predict(char *, char *);             // overarching method- runs functions used to make predictions on testing data
-    int outputPredictions(char *);            // outputs file with predictions
+    void outputPredictions(char *);           // outputs file with predictions
     void evaluatePredictions(char *, char *); // compares predictions with true dataset (answers) and calculates accuracy
     void outputAccuracy(char *);              // outputs accuracy file
     int openAnswers(char *);                  // opens answers file, parses, and stores
