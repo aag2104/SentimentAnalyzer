@@ -53,7 +53,7 @@ void Analyzer::tokenizeMap(std::map<DSString, Tweet> messages) // returns vector
 }
 
 // tweet is a vector of words (DSString)
-int Analyzer::storeWords(std::vector<DSString> tweet) // iterates through vector and stores words with ratio values/edits current ratio values
+void Analyzer::storeWords(std::vector<DSString> tweet) // iterates through vector and stores words with ratio values/edits current ratio values
 {
     DSString sentiment = tweet[0]; // 1st spot in vector is the tweet's sentiment, store
 
@@ -86,32 +86,27 @@ int Analyzer::storeWords(std::vector<DSString> tweet) // iterates through vector
             }
         }
     }
-
-    return 0;
 }
 
-int Analyzer::decideSignificance(std::map<DSString, Ratio>)
+void Analyzer::decideSignificance(std::map<DSString, Ratio>) // decides whether a word is to be classifed as positive or negative
 {
     std::map<DSString, Ratio>::iterator it = Tokens.begin();
 
     for (it = Tokens.begin(); it != Tokens.end(); ++it)
     {
-        if (it->second.calculate() < 0)
+        if (it->second.calculate() < 0) // if calculate result is less then zero
         {
-            it->second.setCalc(-1);
+            it->second.setCalc(-1); // word is negative
         }
-        else
+        else // if greater than zero
         {
-            it->second.setCalc(1);
+            it->second.setCalc(1); // word is positive
         }
     }
-
-    return 0;
 }
 
-int Analyzer::openTrain(char *trainingData) // char* trainingData
+void Analyzer::openTrain(char *trainingData) // pass in argv
 {
-    // char filename[] = "/users7/cse/ageer/DataStrc/assignment-2-don-t-be-sentimental-aag2104/assignment-2-don-t-be-sentimental-aag2104-1/data/train_dataset_20k.csv";
     FILE *stream;
 
     // set up the buffer
@@ -180,7 +175,6 @@ int Analyzer::openTrain(char *trainingData) // char* trainingData
     }
 
     fclose(stream);
-    return 0;
 }
 
 int Analyzer::openTest(char *testingData)
