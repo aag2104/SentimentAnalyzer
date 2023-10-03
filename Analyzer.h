@@ -25,7 +25,7 @@ public:
     int openTest(char *);      // opens testing file, parses through it and stores sentiment, id, and tweet -> calls convertToTweets
     void iterateThroughTest(); // iterates through test tweets and stores their data in TweetSums
 
-    // methods that deal with both testing and traing data:
+    // methods that deal with both testing and training data:
     char *clean(char *);                         // gets rid of special characters and unnecessary punctuation
     void tokenizeMap(std::map<DSString, Tweet>); // iterates through map of tweets and calls Tweet class's tokenize function -> calls store words
 
