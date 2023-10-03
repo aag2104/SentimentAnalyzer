@@ -22,7 +22,7 @@ public:
     void setNum(int);     // sets the num to number of choice, used for incrementing
     void setDenom(int);   // sets the denom to number of choice, used for incrementing
 
-    double calculate(); // returns the quotient of good/bad -> useful for deciding a word's "overall score"
+    double calculate(); // returns the good-bad -> useful for deciding a word's "overall score"
     int numOccur();     // calculates how many occurrences the word makes in the tweet -> used to decide whether a word is important to the training process
 
     friend std::ostream &operator<<(std::ostream &, const Ratio &); // overides the << operator so the system automatically prints "num/denom"

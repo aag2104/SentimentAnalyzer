@@ -16,7 +16,7 @@ Ratio::Ratio(int one, int two, double three) // sets num, denom, and calculation
 
 double Ratio::calculate()
 {
-    calculation = num - denom; // divide to get calculation
+    calculation = num - denom; // subtract to get calculation
     return calculation;        // return value
 }
 
